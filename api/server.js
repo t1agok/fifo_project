@@ -17,11 +17,13 @@ app.use(cookieParser());
 const materialRoutes = require('./routes/materialRoute');
 const userRoutes = require('./routes/usersRoute');
 const operationRoutes = require('./routes/operationRoute');
+const stockRoutes = require('./routes/stockRoute');
 
 //endpoints
 app.use('/api/materials', materialRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/operations', operationRoutes);
+app.use('/api/stock', stockRoutes);
 app.use(express.json());
 
 app.use(errorHandler);

@@ -8,6 +8,7 @@ const sequelize = new Sequelize('plate_inventory_db', 'postgres', 'admin', {
 const Material = require('./material')(sequelize, Sequelize.DataTypes);
 const User = require('./user')(sequelize, Sequelize.DataTypes);
 const Operation = require('./operation')(sequelize, Sequelize.DataTypes);
+const Stock = require('./stock')(sequelize, Sequelize.DataTypes);
 
 Material.hasMany(Operation, { foreignKey: 'material_id' });
 User.hasMany(Operation, { foreignKey: 'user_id' });
@@ -26,6 +27,7 @@ const db = {
   Material,
   User,
   Operation,
+  Stock,
 };
 
 module.exports = db;

@@ -18,9 +18,9 @@ const NavBar = () => {
     };
 
     return (
-        <div className='flex-none w-20 bg-black h-screen p-4'>
+        <div className='flex-none w-20 bg-white h-screen p-4'>
             <div className="">
-                <Button variant="outline" onClick={onSubmit}>
+                <Button className="bg-black text-white" variant="outline" onClick={onSubmit}>
                     <MdLogout />
                 </Button>
             </div>

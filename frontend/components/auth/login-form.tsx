@@ -40,7 +40,7 @@ export const LoginForm = () => {
     const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
         try {
             const response = await axios.post('http://localhost:3000/api/users/login', values);
-            console.log('Response data:', response.data);
+            //console.log('Response data:', response.data);
     
             if (response.status === 200 && response.data.success) {
                 setSuccessMessage("Login efetuado");

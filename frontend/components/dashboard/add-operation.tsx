@@ -24,6 +24,7 @@ import { fetchMaterials, handleAddOperation } from "@/lib/api";
 import { useAuth } from "../context/auth-context";
 import { fetchTableDataContext } from "@/app/dashboard/page";
 import { toast } from 'react-toastify';
+import MaterialSelectModal from "./material-select-modal";
 
 type Material = { 
     material_id: number;
@@ -50,16 +51,18 @@ export const AddOperation: React.FC<AddOperationProps> = ({ onOperationAdded }) 
     });
     const [materials, setMaterials] = useState<Material[]>([]);
     const [open, setOpen] = useState(false);
+    const [materialModalOpen, setMaterialModalOpen] = useState(false);
     const { user } = useAuth();
     const fetchTableData = useContext(fetchTableDataContext);
+    const [selectedMaterial, setSelectedMaterial] = useState<Material | null>(null);
 
-    console.log('User in AddOperation:', user);
+    //console.log('User in AddOperation:', user);
     
     useEffect(() => {
         const getMaterials = async () => {
             const fetchedMaterials = await fetchMaterials();
             if (fetchedMaterials) {
-                console.log('Setting materials:', fetchedMaterials);
+                //console.log('Setting materials:', fetchedMaterials);
                 setMaterials(fetchedMaterials)
             }
         };
@@ -67,7 +70,7 @@ export const AddOperation: React.FC<AddOperationProps> = ({ onOperationAdded }) 
     }, []);
 
     useEffect(() => {
-        console.log('Dialog open state:', open);
+        //console.log('Dialog open state:', open);
     }, [open]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => { 
@@ -78,16 +81,25 @@ export const AddOperation: React.FC<AddOperationProps> = ({ onOperationAdded }) 
         setFormData({ ...formData, [field]: value });
     };
 
+    const HandleMaterialSelect = (materialId: number) => {
+        const selected = materials.find((material) => material.material_id === materialId);
+        if (selected) {
+            setSelectedMaterial(selected);
+            setFormData({ ...formData, material_id: materialId.toString() });
+            setMaterialModalOpen(false);
+        }
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user || !user.user_id) {
-            console.log("id:", user?.user_id);
+            //console.log("id:", user?.user_id);
             toast.error("Usuário não autenticado");
             return;
         }
         try {
             const newOperation = await handleAddOperation(formData, user.user_id);
-            console.log('New operation:', newOperation);
+            //console.log('New operation:', newOperation);
             if (newOperation) {
                 setOpen(false);
                 onOperationAdded(newOperation);
@@ -129,6 +141,32 @@ export const AddOperation: React.FC<AddOperationProps> = ({ onOperationAdded }) 
                 </Label>
                 <Input type="number" name="nf" id="nf" onChange={handleChange} className="col-span-2" />
             </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label className="text-right">
+                    Material
+                </Label>
+                <div className="col-span-2 flex items-center gap-2">
+                    <Button 
+                        variant="outline" 
+                        type="button"
+                        onClick={() => setMaterialModalOpen(true)}
+                        className="w-full"
+                    >
+                        {selectedMaterial ? selectedMaterial.code : "Selecionar Material"}
+                    </Button>
+                </div>
+            </div>
+            {selectedMaterial && (
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <div className="col-span-4 text-sm text-gray-500">
+                        <p>Espessura: {selectedMaterial.thickness}</p>
+                        <p>Largura: {selectedMaterial.height}</p>
+                        <p>Comprimento: {selectedMaterial.length}</p>
+                        <p>Peso: {selectedMaterial.weight}</p>
+                    </div>
+                </div>
+            )}
+            {/* Old material select
             <div className="grid grid-cols-4 items-center">
                 <Select onValueChange={(value) => handleSelectChange("material_id", value)}>
                     <SelectTrigger  className="col-end-4 col-span-2">
@@ -143,6 +181,7 @@ export const AddOperation: React.FC<AddOperationProps> = ({ onOperationAdded }) 
                     </SelectContent>
                 </Select>
             </div>
+            */}
             <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="observation" className="text-right">
                 Observação
@@ -172,6 +211,13 @@ export const AddOperation: React.FC<AddOperationProps> = ({ onOperationAdded }) 
             <Button type="submit" onClick={handleSubmit}>Adicionar</Button>
             </DialogFooter>
         </DialogContent>
+
+        <MaterialSelectModal 
+            open={materialModalOpen} 
+            onOpenChange={setMaterialModalOpen} 
+            materials={materials} 
+            onSelect={HandleMaterialSelect}
+        />
         </Dialog>
     );
 }

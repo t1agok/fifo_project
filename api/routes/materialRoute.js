@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/materialRoute', async (req, res, next) => {
   try {
-    const material = Material.create(req.body);
+    const material = await Material.create(req.body);
     res.json(material);
   } catch (error) {
     next(error);

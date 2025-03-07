@@ -36,9 +36,9 @@ export const AuthProvider = ({ children }: {children: React.ReactNode }) => {
         const authenticate = async () => {
             try {
                 const authStatus = await checkAuth();
-                console.log('checkAuth returned:', authStatus);
+                //console.log('checkAuth returned:', authStatus);
                 setIsAuthenticated(authStatus.isAuthenticated);
-                console.log('Setting User:', authStatus.user);
+                //console.log('Setting User:', authStatus.user);
                 setUser(authStatus.user);
 
                 if (!authStatus) {

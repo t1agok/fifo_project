@@ -28,8 +28,8 @@ const signup = async (req, res, next) => {
                 expiresIn: 1 * 24 * 60 * 60,
             });
             res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true });
-            console.log("user", JSON.stringify(user, null, 2));
-            console.log(token);
+            //console.log("user", JSON.stringify(user, null, 2));
+            //console.log(token);
 
             //send users details
             return res.status(201).json({ success: true, user });
@@ -56,7 +56,7 @@ const login = async (req, res, next) => {
         //if user email exists, then compare password with bcrypt
         if (user) {
             const isEqual = await bcrypt.compare(password, user.password);
-            console.log(`Password comparison result: ${isEqual}`);
+            //console.log(`Password comparison result: ${isEqual}`);
 
             //if passwords match, gen the token with the user id and the secretKey in the env file
             if (isEqual) {
@@ -76,8 +76,8 @@ const login = async (req, res, next) => {
                     secure: process.env.NODE_ENV === 'production',
                     sameSite: 'Lax' // Adjust sameSite based on environment
                 });
-                console.log("user", JSON.stringify(user, null, 2));
-                console.log(token);
+                //console.log("user", JSON.stringify(user, null, 2));
+                //console.log(token);
                 return res.status(200).send({ success: true, authenticated: true, user });
             } else {
                 console.log("Senha incorreta");
@@ -94,7 +94,7 @@ const login = async (req, res, next) => {
 };
 
 const verifyToken = (req, res, next) => {
-    console.log("Cookies in request:", req.cookies);
+    //console.log("Cookies in request:", req.cookies);
 
     const token = req.cookies.jwt;
     if (!token) {
@@ -103,7 +103,7 @@ const verifyToken = (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.secretKey);
         req.user = decoded;
-        console.log('Decoded Token:', decoded);
+        //console.log('Decoded Token:', decoded);
         next();
     } catch (error) {
         res.status(401).json({ authenticated: false, message: "Invalid token." });

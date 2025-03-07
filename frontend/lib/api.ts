@@ -26,7 +26,7 @@ export const loginUser = async (credentials: any) => {
 export const checkAuth = async () => {
   try {
       const response = await apiClient.get('/users/protected');
-      console.log('Authentication check response:', response.data); // Debugging log
+      //console.log('Authentication check response:', response.data); // Debugging log
       return {
         isAuthenticated: response.data.authenticated,
         user: response.data.user,
@@ -84,7 +84,7 @@ export const deleteOperation = async (id: number) => {
 export const fetchMaterials = async () => {
   try {
       const response = await apiClient.get("/materials/materialRoute");
-      console.log("Fetched data:", response.data);
+      //console.log("Fetched data:", response.data);
       return response.data;
   } catch (error) {
       console.error("Failed to fetch materials:", error);
@@ -99,13 +99,13 @@ export const handleAddOperation = async (formData: any, userId: number) => {
       date: new Date().toISOString().split('T')[0],
     }
 
-    console.log("formData: ", formData);
-    console.log("newOperation: ", newOperation);
+    //console.log("formData: ", formData);
+    //console.log("newOperation: ", newOperation);
 
     const response = await apiClient.post("/operations/operationRoute", newOperation);
     
-    console.log("Response status:", response.status);
-    console.log("Response data:", response.data);
+    //console.log("Response status:", response.status);
+    //console.log("Response data:", response.data);
 
     if (response.status === 201 || response.status === 200 ) {
       return response.data;
@@ -115,3 +115,34 @@ export const handleAddOperation = async (formData: any, userId: number) => {
     throw error;
   }
 };
+
+export const handleAddMaterial = async (formData: any) => {
+  try {
+    const newMaterial = formData;
+
+    //console.log("formData: ", formData);
+    //console.log("newMaterial: ", newMaterial);
+
+    const response = await apiClient.post("/materials/materialRoute", newMaterial);
+    
+    //console.log("Response status:", response.status);
+    //console.log("Response data:", response.data);
+
+    if (response.status === 201 || response.status === 200 ) {
+      return response.data;
+    }
+  } catch (error) {
+    console.error("Failed to add material:", error);
+    throw error;
+  }
+};
+
+export const fetchStock = async () => {
+  try {
+      const response = await apiClient.get("/stock/stockRoute");
+      console.log("Fetched data:", response.data);
+      return response.data;
+  } catch (error) {
+      console.error("Failed to fetch stock:", error);
+  }
+}

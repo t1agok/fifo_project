@@ -21,7 +21,7 @@ const Dashboard = () => {
     const [data, setData] = useState<OperationWithMaterial[]>([]);
 
     useEffect(() => {
-        console.log('isAuthenticated:', isAuthenticated);
+        //console.log('isAuthenticated:', isAuthenticated);
 
         if (!isAuthenticated && !isLoading) {
             router.push('/auth/login');
@@ -50,7 +50,7 @@ const Dashboard = () => {
         <fetchTableDataContext.Provider value={fetchTableData}>
         <div className="flex">
             <NavBar />
-            <div className='flex-1 md:flex h-screen relative'>
+            <div className='flex md:flex h-screen relative'>
                 <Header />
                 <OperationsTable data={data} loading={loading} error={error}/>
             </div>
