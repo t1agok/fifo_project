@@ -16,12 +16,14 @@ export const columns: ColumnDef<StockInterface>[] = [
     {
         accessorKey: "code",
         header: () => <div className="text-center m-2 text-black font-semibold">Código</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.code}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.code}</div>,
+        enableColumnFilter: true,
     },
     {
         accessorKey: "quantity",
         header: () => <div className="text-center m-2 text-black font-semibold">Quantidade</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.quantity}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.quantity}</div>,
+        enableColumnFilter: true,
     },
     /*{
         accessorKey: "last_updated",
@@ -31,26 +33,31 @@ export const columns: ColumnDef<StockInterface>[] = [
     {
         accessorKey: "length",
         header: () => <div className="text-center m-2 text-black font-semibold">Comprimento</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.length}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.length}</div>,
+        enableColumnFilter: true,
     },  
     {
         accessorKey: "height",
         header: () => <div className="text-center m-2 text-black font-semibold">Largura</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.height}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.height}</div>,
+        enableColumnFilter: true,
     },
     {
         accessorKey: "thickness",
         header: () => <div className="text-center m-2 text-black font-semibold">Espessura</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.thickness}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.thickness}</div>,
+        enableColumnFilter: true,
     },    
     {
         accessorKey: "weight",
         header: () => <div className="text-center m-2 text-black font-semibold">Peso</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.weight}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.weight}</div>,
+        enableColumnFilter: true,
     },
     {
         accessorKey: "location",
         header: () => <div className="text-center m-2 text-black font-semibold">Localização</div>,
-        cell: ({row}) => <div className="text-center text-black m-2">{row.original.location}</div>
+        cell: ({row}) => <div className="text-center text-black m-2">{row.original.location}</div>,
+        enableColumnFilter: true,
     },
 ];

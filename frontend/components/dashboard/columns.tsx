@@ -125,28 +125,4 @@ export const columns: ColumnDef<OperationWithMaterial>[] = [
         cell: ({row}) => <div className="text-center text-black m-2">{row.original.material?.length}</div>,
         enableColumnFilter: true,
     },
-    {
-        accessorKey: "remove",
-        header: () => <div className="text-center m-2 text-black font-semibold"></div>,
-        cell: ({ row }) => {
-            const updateTable = useContext(fetchTableDataContext)
-            //console.log("Row Data:", row.original);
-            return (
-            <button onClick={async () => {
-                const confirmed = window.confirm("Deseja excluir esta operação?");
-                if (confirmed) {
-                    const success: boolean = await deleteOperation(row.original.operation_id);
-                    if (success) {
-                        toast.success("Operação deletada!");
-                        updateTable();
-                    } else {
-                        toast.error("Falha ao deletar a operação.");
-                    }
-                }
-            }} className="text-red-400">
-              <FaTrash className="flex justify-center"/>
-            </button>
-          );
-        },
-    },
 ];
